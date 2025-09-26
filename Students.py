@@ -7,8 +7,4 @@ class Student:
         self.grades = grades if grades is not None else {}
         self.courses = courses if courses is not None else set()
     
-    def __str__(self):
-        return (f"Student ID: {self.id_name}\n"
-                f"Email: {self.email}\n"
-                f"Grades: {self.grades}\n"
-                f"Courses: {self.courses}\n")
+  
