@@ -1,0 +1,77 @@
+import os
+
+# Step 0: Setup
+# Get the path to the Documents folder
+documents_path = os.path.expanduser("~/Documents")
+
+# Make sure the Documents folder exists
+if not os.path.exists(documents_path):
+    os.makedirs(documents_path)
+
+# Step 1: Main Menu Loop
+while True:
+    print("\n=== Student Records Management ===")
+    print("1. Register Student")
+    print("2. Open Student Record")
+    print("3. Exit")
+
+    choice = input("Enter your choice: ")
+
+    # Step 2: Register Student
+    if choice == "1":
+        print("\n--- Register New Student ---")
+        student_no = input("Student No.: ")
+        last_name = input("Last Name: ")
+        first_name = input("First Name: ")
+        middle_initial = input("Middle Initial: ")
+        program = input("Program: ")
+        age = input("Age: ")
+        gender = input("Gender: ")
+        birthday = input("Birthday: ")
+        contact_no = input("Contact No.: ")
+
+        # Format data to write to file
+        data = [
+            f"Student No.: {student_no}",
+            f"Full Name: {last_name}, {first_name} {middle_initial}.",
+            f"Program: {program}",
+            f"Age: {age}",
+            f"Gender: {gender}",
+            f"Birthday: {birthday}",
+            f"Contact No.: {contact_no}"
+        ]
+
+        # Define file path (~/Documents/<student_no>.txt)
+        file_path = os.path.join(documents_path, f"{student_no}.txt")
+
+        # Write data to the file
+        try:
+            with open(file_path, "w") as f:
+                for line in data:
+                    f.write(line + "\n")
+            print("✅ Student registered successfully!")
+        except Exception as e:
+            print(f"❌ Failed to register student: {e}")
+
+    # Step 3: Open Student Record
+    elif choice == "2":
+        print("\n--- Open Student Record ---")
+        student_no = input("Enter Student No.: ")
+        file_path = os.path.join(documents_path, f"{student_no}.txt")
+
+        try:
+            with open(file_path, "r") as f:
+                print("\n📄 Student Record:")
+                for line in f:
+                    print(line.strip())
+        except FileNotFoundError:
+            print("❌ Student record not found.")
+
+    # Step 4: Exit
+    elif choice == "3":
+        print("\n👋 Thank you for using the Student Records Management System. Goodbye!")
+        break
+
+    # Invalid choice
+    else:
+        print("❌ Invalid choice. Please try again.")
